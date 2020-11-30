@@ -1,6 +1,7 @@
 package com.codeclan.example.pirateservice.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "pirates")
@@ -22,6 +23,23 @@ public class Pirate {
     @ManyToOne
     @JoinColumn(name="ship_id", nullable=false)
     private Ship ship;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pirates_raids",
+            joinColumns = { @JoinColumn(
+                    name = "pirate_id",
+                    nullable = false,
+                    updatable = false)
+            },
+            inverseJoinColumns = { @JoinColumn(
+            name = "raid_id",
+            nullable = false,
+            updatable = false)
+            }
+        )
+
+    private List<Raid> raids;
 
     public Pirate(String firstName, String lastName, int age, Ship ship) {
         this.firstName = firstName;
